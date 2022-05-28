@@ -1,11 +1,14 @@
 import { useState } from 'react';
+
+import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+
 import {
   createAuthUserWithEmailAndPassword,
-  creatUserDocumentFromAuth,
-} from '../../utils/firebase/firebase.utils.js';
-import FormInput from '../form-input/form-input.component';
+  createUserDocumentFromAuth,
+} from '../../utils/firebase/firebase.utils';
+
 import './sign-up-form.styles.scss';
-import Button from '../button/button.component';
 
 const defaultFormFields = {
   displayName: '',
@@ -26,28 +29,30 @@ const SignUpForm = () => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      alert('Password do not match');
+      alert('passwords do not match');
       return;
     }
+
     try {
       const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
 
-      await creatUserDocumentFromAuth(user, { displayName });
+      await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use');
       } else {
-        console.log('error', error);
+        console.log('user creation encountered an error', error);
       }
     }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormFields({ ...formFields, [name]: value });
   };
 
@@ -91,10 +96,7 @@ const SignUpForm = () => {
           name='confirmPassword'
           value={confirmPassword}
         />
-
-        <Button buttonType='' type='submit'>
-          Sign Up
-        </Button>
+        <Button type='submit'>Sign Up</Button>
       </form>
     </div>
   );

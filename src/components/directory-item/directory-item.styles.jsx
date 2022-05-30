@@ -45,6 +45,12 @@ export const DirectoryItemContainer = styled.div`
   margin: 0 7.5px 15px;
   overflow: hidden;
 
+  @media screen and (max-width: 850px) {
+    min-width: 40%;
+  }
+  @media screen and (max-width: 600px) {
+    min-width: 50%;
+  }
   &:hover {
     cursor: pointer;
 

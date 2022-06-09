@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-
+import Footer from '../../components/footer/footer.component';
 import Directory from '../../components/directory/directory.component';
 
 const Home = () => {
@@ -7,6 +7,7 @@ const Home = () => {
     <div>
       <Directory />
       <Outlet />
+      <Footer />
     </div>
   );
 };
